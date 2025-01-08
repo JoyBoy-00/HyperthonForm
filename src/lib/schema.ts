@@ -17,8 +17,17 @@ export const formSchema = z.object({
       z
         .object({
           fullName: z.string().min(2, "Name must be at least 2 characters"),
-          rollNo: z.string().min(1, "Roll number is required"),
-          email: z.string().email("Invalid email address"),
+          rollNo: z
+            .string()
+            .min(1, "Roll number is required")
+            .regex(
+              /^\d{6,}$/,
+              "Roll number must be a number with 6 or more digits"
+            ),
+          email: z
+            .string()
+            .email("Invalid email address")
+            .regex(/@kiit\.ac\.in$/, "Email must end with @kiit.ac.in"),
           branch: z.string().min(1, "Branch is required"),
         })
         .optional()

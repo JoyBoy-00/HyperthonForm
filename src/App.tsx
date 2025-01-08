@@ -42,7 +42,7 @@ export default function App() {
   const showSuccessToast = () => {
     toast({
       title: 'Success',
-      description: 'Your operation was successful!',
+      description: 'Registered Successfully!',
     });
   };
 

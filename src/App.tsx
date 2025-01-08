@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Loader2, UserPlus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Toaster } from "./components/ui/toaster";
 import {
   Card,
   CardContent,
@@ -26,17 +27,32 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { toast } from "sonner";
 import { formSchema } from "@/lib/schema";
 import { SelectItems } from "./SelectItems";
 import { MatrixEffect } from "./components/MatrixEffect";
+import { useToast } from "./hooks/use-toast";
 
 type FormValues = z.infer<typeof formSchema>;
 
 export default function App() {
   const [teamMemberCount, setTeamMemberCount] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
 
+  const showSuccessToast = () => {
+    toast({
+      title: 'Success',
+      description: 'Your operation was successful!',
+    });
+  };
+
+  const showErrorToast = () => {
+    toast({
+      title: 'Error',
+      description: 'Something went wrong. Please try again.',
+    });
+  };
+  
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -111,13 +127,12 @@ export default function App() {
       if (!response.ok) {
         throw new Error("Submission failed");
       }
-
-      toast.success("Form submitted successfully!");
+      showSuccessToast();
       form.reset();
       setTeamMemberCount(0);
     } catch (error) {
+      showErrorToast();
       console.error("Error submitting form:", error);
-      toast.error("Failed to submit form. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -146,7 +161,7 @@ export default function App() {
     <>
       <MatrixEffect />
       <div className="circuit-decoration" />
-      <div className="min-h-screen flex items-center justify-center px-4 py-8 sm:px-6 lg:px-8">
+      <div className="min-h-screen flex items-center justify-center px-4 py-8 sm:px-6 lg:px-8 relative z-10">
         <div className="w-full max-w-3xl">
           <Card className="bg-[#1a1a1a] border-[#333] shadow-2xl rounded-3xl">
             <CardHeader className="space-y-2 border-b border-[#333] bg-gradient-to-r from-[#00ff80]/10 to-[#1d8a54]/10 rounded-t-3xl">
@@ -165,44 +180,14 @@ export default function App() {
                   className="space-y-6"
                 >
                   <div className="space-y-4">
-                    <FormField
-                      control={form.control}
-                      name="teamName"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-white">
-                            Team Name
-                          </FormLabel>
-                          <FormControl>
-                            <Input
-                              {...field}
-                              value={
-                                typeof field.value === "string"
-                                  ? field.value
-                                  : ""
-                              }
-                              placeholder="Enter team name"
-                              className="bg-[#222] border-[#333] text-white placeholder:text-gray-500 rounded-lg"
-                            />
-                          </FormControl>
-                          <FormMessage className="text-red-400" />
-                        </FormItem>
-                      )}
-                    />
-
                     {Object.keys(formSchema.shape)
-                      .filter(
-                        (key) => key !== "teamMembers" && key !== "teamName"
-                      )
+                      .filter((key) => key !== "teamMembers")
                       .map((fieldName) => (
                         <FormField
                           key={fieldName}
                           control={form.control}
                           name={
-                            fieldName as keyof Omit<
-                              FormValues,
-                              "teamMembers" | "teamName"
-                            >
+                            fieldName as keyof Omit<FormValues, "teamMembers">
                           }
                           render={({ field }) => (
                             <FormItem>
@@ -281,16 +266,12 @@ export default function App() {
                         Team Member {index + 1}
                       </h3>
                       {Object.keys(formSchema.shape)
-                        .filter(
-                          (key) => key !== "teamMembers" && key !== "teamName"
-                        )
+                        .filter((key) => key !== "teamMembers")
                         .map((fieldName) => (
                           <FormField
                             key={fieldName}
                             control={form.control}
-                            name={
-                              `teamMembers.${index}.${fieldName}` as keyof FormValues
-                            }
+                            name={`teamMembers.${index}.${fieldName}` as any}
                             render={({ field }) => (
                               <FormItem>
                                 <FormLabel className="text-white">
@@ -353,6 +334,7 @@ export default function App() {
             </CardContent>
           </Card>
         </div>
+        <Toaster/>
       </div>
     </>
   );

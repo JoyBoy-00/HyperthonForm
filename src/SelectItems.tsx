@@ -2,17 +2,17 @@ import { SelectItem } from '@/components/ui/select';
 
 export const SelectItems = () => (
   <>
-    <SelectItem value="cse">Computer Science and Engineering</SelectItem>
-    <SelectItem value="csse">Computer Science and Systems Engineering</SelectItem>
-    <SelectItem value="csce">Computer Science and Communication Engineering</SelectItem>
-    <SelectItem value="etc">Electronics and Telecommunication Engineering</SelectItem>
-    <SelectItem value="ee">Electrical Engineering</SelectItem>
-    <SelectItem value="eee">Electronics and Electrical Engineering</SelectItem>
-    <SelectItem value="ecse">Electronics and Computer Science Engineering</SelectItem>
-    <SelectItem value="me">Mechanical Engineering</SelectItem>
-    <SelectItem value="mce">Mechatronics Engineering</SelectItem>
-    <SelectItem value="ce">Civil Engineering</SelectItem>
-    <SelectItem value="it">Information Technology</SelectItem>
-    <SelectItem value="ae">Aerospace Engineering</SelectItem>
+    <SelectItem value="CSE">Computer Science and Engineering</SelectItem>
+    <SelectItem value="CSSE">Computer Science and Systems Engineering</SelectItem>
+    <SelectItem value="CSCE">Computer Science and Communication Engineering</SelectItem>
+    <SelectItem value="ETC">Electronics and Telecommunication Engineering</SelectItem>
+    <SelectItem value="EE">Electrical Engineering</SelectItem>
+    <SelectItem value="EEE">Electronics and Electrical Engineering</SelectItem>
+    <SelectItem value="ECSE">Electronics and Computer Science Engineering</SelectItem>
+    <SelectItem value="Mech">Mechanical Engineering</SelectItem>
+    <SelectItem value="Mechatronics">Mechatronics Engineering</SelectItem>
+    <SelectItem value="Civil">Civil Engineering</SelectItem>
+    <SelectItem value="IT">Information Technology</SelectItem>
+    <SelectItem value="AeroSpace">Aerospace Engineering</SelectItem>
   </>
 );

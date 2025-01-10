@@ -41,18 +41,18 @@ export default function App() {
 
   const showSuccessToast = () => {
     toast({
-      title: 'Success',
-      description: 'Registered Successfully!',
+      title: "Success",
+      description: "Registered Successfully!",
     });
   };
 
   const showErrorToast = () => {
     toast({
-      title: 'Error',
-      description: 'Something went wrong. Please try again.',
+      title: "Error",
+      description: "Something went wrong. Please try again.",
     });
   };
-  
+
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -181,7 +181,9 @@ export default function App() {
                 >
                   <div className="space-y-4">
                     {Object.keys(formSchema.shape)
-                      .filter((key) => key !== "teamMembers")
+                      .filter(
+                        (key) => key !== "teamMembers" && key !== "teamName"
+                      )
                       .map((fieldName) => (
                         <FormField
                           key={fieldName}
@@ -235,6 +237,33 @@ export default function App() {
                       ))}
                   </div>
 
+                  <div className="space-y-4">
+                    <FormField
+                      control={form.control}
+                      name="teamName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-white">
+                            Team Name
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              value={
+                                typeof field.value === "string"
+                                  ? field.value
+                                  : ""
+                              }
+                              placeholder="Enter team name"
+                              className="bg-[#222] border-[#333] text-white placeholder:text-gray-500 rounded-lg"
+                            />
+                          </FormControl>
+                          <FormMessage className="text-red-400" />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
                   <div className="flex justify-between items-center pt-4">
                     <Button
                       type="button"
@@ -266,7 +295,9 @@ export default function App() {
                         Team Member {index + 1}
                       </h3>
                       {Object.keys(formSchema.shape)
-                        .filter((key) => key !== "teamMembers")
+                        .filter(
+                          (key) => key !== "teamMembers" && key !== "teamName"
+                        )
                         .map((fieldName) => (
                           <FormField
                             key={fieldName}
@@ -334,8 +365,11 @@ export default function App() {
             </CardContent>
           </Card>
         </div>
-        <Toaster/>
+        <Toaster />
       </div>
+      <footer className="mt-8 mb-8 text-center text-green-400">
+        Made with ❤️ by GFG-KIIT Team
+      </footer>
     </>
   );
 }

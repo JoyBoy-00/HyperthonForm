@@ -7,10 +7,7 @@ export const formSchema = z.object({
     .string()
     .min(1, "Roll number is required")
     .regex(/^\d{6,}$/, "Roll number must be a number with 6 or more digits"),
-  email: z
-    .string()
-    .email("Invalid email address")
-    .regex(/@kiit\.ac\.in$/, "Email must end with @kiit.ac.in"),
+  email: z.string().email("Invalid email address"),
   branch: z.string().min(1, "Branch is required"),
   teamMembers: z
     .array(
@@ -24,10 +21,7 @@ export const formSchema = z.object({
               /^\d{6,}$/,
               "Roll number must be a number with 6 or more digits"
             ),
-          email: z
-            .string()
-            .email("Invalid email address")
-            .regex(/@kiit\.ac\.in$/, "Email must end with @kiit.ac.in"),
+          email: z.string().email("Invalid email address"),
           branch: z.string().min(1, "Branch is required"),
         })
         .optional()

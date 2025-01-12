@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { Loader2, UserPlus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Toaster } from "./components/ui/toaster";
+import { Analytics } from "@vercel/analytics/react"
 import {
   Card,
   CardContent,
@@ -159,6 +160,7 @@ export default function App() {
 
   return (
     <>
+    <Analytics/>
       <MatrixEffect />
       <div className="circuit-decoration" />
       <div className="min-h-screen flex items-center justify-center px-4 py-8 sm:px-6 lg:px-8 relative z-10">

@@ -109,7 +109,7 @@ export default function App() {
 
   async function onSubmit(data: FormValues) {
     setIsSubmitting(true);
-    console.log("Form Data:", data);
+    // console.log("Form Data:", data);
     try {
       const formData = new FormData();
       Object.entries(data).forEach(([key, value]) => {
@@ -128,7 +128,7 @@ export default function App() {
         }
       });
 
-      console.log(formData)
+      // console.log(formData)
 
       formData.append("Time", new Date().toLocaleString());
 
@@ -137,9 +137,9 @@ export default function App() {
         formDataObj[key] = value;
       });
 
-      console.log(formDataObj)
+      // console.log(formDataObj)
 
-      console.log("Form Data being submitted:", formDataObj);
+      // console.log("Form Data being submitted:", formDataObj);
 
       const response = await fetch(
         `https://script.google.com/macros/s/${import.meta.env.VITE_Sheet}/exec`,

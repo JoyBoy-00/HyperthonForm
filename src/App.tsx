@@ -153,10 +153,10 @@ export default function App() {
         throw new Error("Submission failed");
       }
       showSuccessToast();
-      // form.reset();
-      // setTimeout(() => {
-      //   window.location.href = "https://www.gfgkiit.in";
-      // }, 5000); // 5 seconds delay
+      form.reset();
+      setTimeout(() => {
+        window.location.href = "https://www.gfgkiit.in";
+      }, 5000); // 5 seconds delay
     } catch (error) {
       showErrorToast();
       console.error("Error submitting form:", error);

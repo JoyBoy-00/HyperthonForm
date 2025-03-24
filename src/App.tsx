@@ -115,7 +115,7 @@ export default function App() {
       Object.entries(data).forEach(([key, value]) => {
         if (value == null) return; // Skip if value is null
         if (Array.isArray(value)) {
-          formData.append('teamSize', value.length.toString());
+          formData.append('teamSize', (value.length+1).toString());
           value.forEach((member, index) => {
         if (member) {
           Object.entries(member).forEach(([memberKey, memberValue]) => {
@@ -129,6 +129,8 @@ export default function App() {
       });
 
       console.log(formData)
+
+      formData.append("Time", new Date().toLocaleString());
 
       const formDataObj: Record<string, string | File> = {};
       formData.forEach((value, key) => {

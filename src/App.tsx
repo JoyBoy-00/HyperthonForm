@@ -109,19 +109,41 @@ export default function App() {
 
   async function onSubmit(data: FormValues) {
     setIsSubmitting(true);
+    console.log("Form Data:", data);
     try {
-      const cleanedData = {
-        ...data,
-        teamMembers: data.teamMembers.filter((member) => member !== undefined),
-        teamName: data.teamName,
-      };
+      const formData = new FormData();
+      Object.entries(data).forEach(([key, value]) => {
+        if (value == null) return; // Skip if value is null
+        if (Array.isArray(value)) {
+          formData.append('teamSize', value.length.toString());
+          value.forEach((member, index) => {
+        if (member) {
+          Object.entries(member).forEach(([memberKey, memberValue]) => {
+            formData.append(`team[${index}].${memberKey}`, memberValue);
+          });
+        }
+          });
+        } else {
+          formData.append(key, value);
+        }
+      });
+
+      console.log(formData)
+
+      const formDataObj: Record<string, string | File> = {};
+      formData.forEach((value, key) => {
+        formDataObj[key] = value;
+      });
+
+      console.log(formDataObj)
+
+      console.log("Form Data being submitted:", formDataObj);
 
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/save-to-sheets`,
+        `https://script.google.com/macros/s/${import.meta.env.VITE_Sheet}/exec`,
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ data: cleanedData }),
+          body: formData,
         }
       );
 
@@ -129,8 +151,10 @@ export default function App() {
         throw new Error("Submission failed");
       }
       showSuccessToast();
-      form.reset();
-      setTeamMemberCount(0);
+      // form.reset();
+      // setTimeout(() => {
+      //   window.location.href = "https://www.gfgkiit.in";
+      // }, 5000); // 5 seconds delay
     } catch (error) {
       showErrorToast();
       console.error("Error submitting form:", error);

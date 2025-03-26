@@ -197,8 +197,7 @@ export default function App() {
                 Registration Form
               </CardTitle>
               <CardDescription className="text-gray-400">
-                Fill in your details to register. You can participate solo or
-                add up to 2 team members.
+                Fill in your details to register. You can participate solo or as a team of up to 3 members.
               </CardDescription>
             </CardHeader>
             <CardContent className="pt-6">
